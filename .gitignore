@@ -1,0 +1,8 @@
+/.env
+/vendor/
+/.devdbrc
+/database.sqlite
+/uploads/*
+!/uploads/.gitkeep
+/uploads/optimized/*
+!/uploads/optimized/.gitkeep

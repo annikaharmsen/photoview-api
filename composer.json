@@ -1,0 +1,19 @@
+{
+    "name": "annikaharmsen/photoview",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "stripe/stripe-php": "^18.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Annika Harmsen",
+            "email": "annikat.harmsen1000@gmail.com"
+        }
+    ]
+}

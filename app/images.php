@@ -79,16 +79,26 @@ function uploadFiles($pdo) {
             $skipped++;
             continue;
         }
+
+        if ($uploaded === 0) {
+            Response::error("All files failed to upload. Please try again.", 500);
+        }
     }
 
     if (!empty($values)) {
         batch_insert($pdo, $values, $params);
     }
 
+    if ($skipped === 0) {
+        $message = "Uploaded $uploaded photo(s).";
+    } else {
+        $message = "Uploaded $uploaded photo(s). Skipped $skipped.";
+    }
+
     Response::ok([
         'uploaded' => $uploaded,
         'skipped' => $skipped,
-        'message' => "Uploaded $uploaded photo(s). Skipped $skipped."
+        'message' => $message
     ]);
 }
 

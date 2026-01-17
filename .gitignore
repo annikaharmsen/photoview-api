@@ -6,3 +6,4 @@
 !/uploads/.gitkeep
 /uploads/optimized/*
 !/uploads/optimized/.gitkeep
+/description.txt

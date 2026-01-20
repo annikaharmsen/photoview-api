@@ -152,9 +152,9 @@ function patchQuantity($pdo, $user_id)
         $cart_item_id = $data["cart_item_id"] ?? null;
         $quantity = $data["quantity"] ?? null;
 
-        if (!$cart_item_id || !is_numeric($cart_item_id) || !is_numeric($quantity) || $quantity >= 0) {
+        if (!$cart_item_id || !is_numeric($cart_item_id) || !is_numeric($quantity) || $quantity < 0) {
             http_response_code(400);
-            exit("Invalid or missing cart_item_id or quantity.");
+            exit("Invalid or missing cart_item_id or quantity." . ($quantity < 0));
         }
 
         if ($quantity === 0) {
@@ -193,8 +193,8 @@ function deleteItem($pdo, $user_id)
 
         $sql = "
             DELETE FROM cart_items
-            WHERE cart_item_id = :?
-            AND user_id      = :?
+            WHERE cart_item_id = ?
+            AND user_id      = ?
         ";
 
         $params = [$data["cart_item_id"], $user_id];

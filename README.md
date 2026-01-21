@@ -6,6 +6,16 @@ A REST API for a photography e-commerce platform with shopping cart, payment pro
 
 [Live Demo](https://photoview.annikaharmsen.com/)
 
+### Screenshots
+
+| Login | Gallery | Purchase Options |
+|-------|---------|------------------|
+| ![Login](docs/1-login.png) | ![Gallery](docs/2-gallery.png) | ![Purchase Options](docs/3-purchase-options.png) |
+
+| Cart | Shipping | Payment | Success |
+|------|----------|---------|---------|
+| ![Cart](docs/4-cart.png) | ![Shipping](docs/5-shipping.png) | ![Payment](docs/6-payment.png) | ![Success](docs/7-success.png) |
+
 ## Features
 
 - User registration and session-based authentication

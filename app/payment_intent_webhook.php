@@ -122,7 +122,7 @@ function record_transaction($pdo, $payment_intent) {
         $card->last4,                           // last4
         $card->exp_month,                       // exp_month
         $card->exp_year,                        // exp_year
-        'charge',                               // txn_type ('charge'/'refund')
+        'capture',                              // txn_type ('capture'/'refund')
         $payment_intent->amount,                 // amount (in cents)
         $payment_intent->currency,               // currency
         $payment_intent->status,                 // status

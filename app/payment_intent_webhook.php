@@ -23,20 +23,25 @@ try {
 }
 
 // handle transaction status updates
-switch ($event->type) {
-    case 'payment_intent.succeeded':
-        // IMPROVE: let user know payment has succeeded-- maybe email...?
-    case 'payment_intent.failed':
-        // IMPROVE: or failed!
-        $payment_intent = $event->data->object;
-        record_transaction($pdo, $payment_intent);
-        update_order_status($pdo, $payment_intent);
-        break;
-    default:
-        error_log('Received unknown event type: ' . $event->type);
-}
+try {
+    switch ($event->type) {
+        case 'payment_intent.succeeded':
+            // IMPROVE: let user know payment has succeeded-- maybe email...?
+        case 'payment_intent.failed':
+            // IMPROVE: or failed!
+            $payment_intent = $event->data->object;
+            record_transaction($pdo, $payment_intent);
+            update_order_status($pdo, $payment_intent);
+            break;
+        default:
+            error_log('Received unknown event type: ' . $event->type);
+    }
 
-http_response_code(200);
+    http_response_code(200);
+} catch (Exception $e) {
+    error_log('Webhook error: ' . $e->getMessage());
+    Response::error($e->getMessage(), 500);
+}
 
 
 /*

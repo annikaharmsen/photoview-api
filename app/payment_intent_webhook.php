@@ -75,6 +75,10 @@ http_response_code(200);
 */
 
 function record_transaction($pdo, $payment_intent) {
+    if (empty($payment_intent->metadata->order_id)) {
+        throw new Exception('Missing order_id in payment intent metadata.');
+    }
+
     $sql = 'INSERT INTO transactions (
             payment_provider,
             payment_id,
@@ -91,7 +95,15 @@ function record_transaction($pdo, $payment_intent) {
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-    $card = $payment_intent->charges->data[0]->payment_method_details->card ?? null;
+    $card = null;
+    if (isset($payment_intent->charges->data[0])) {
+        // Legacy format: charges expanded inline
+        $card = $payment_intent->charges->data[0]->payment_method_details->card ?? null;
+    } elseif (!empty($payment_intent->latest_charge)) {
+        // New format: fetch charge by ID
+        $charge = \Stripe\Charge::retrieve($payment_intent->latest_charge);
+        $card = $charge->payment_method_details->card ?? null;
+    }
 
     if (!$card) {
         throw new Exception('Expected card details, none found.');
